@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset='UTF-8'>
+  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+  <link rel='preconnect' href='https://fonts.googleapis.com'>
+  <link rel='preconnect' href='https://fonts.gstatic.com' crossorigin>
+  <link href='https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap' rel='stylesheet'>
+  <link rel='manifest' href='/favicon_io/site.webmanifest' />
+  <link rel='shortcut icon' type='image/jpg' href='/favicon_io/favicon.ico'/>
+  <link rel='stylesheet' href='/style.css'>
+  <title>City Skies</title>
+</head>
+<body>
+  
+<header>
+  <div class='title'>
+    <h1>
+      City Skies<span>.</span>
+    </h1>
+  </div>
+  <div class="search_container">
+    <input 
+      class="search_input" 
+      type="text" 
+      placeholder='Search City'
+    >
+    <button class='submit_btn'>Submit</button>
+  </div>
+</header>
+
+<main>
+  <div class="loader_container">
+    <div class="loader"></div>
+  </div>
+  <div class="scale_btns_container">
+    <button class='metric_btn scale_btn'>Metric: °C, m/s</button>
+    <button class='imperial_btn scale_btn'>Imperial: °F, kph</button>
+  </div>
+  <div>
+    <h2 class='cta_content'>
+      <!-- ? CTA -->
+    </h2>
+  </div>
+  <div class='weather_content'>
+    <section class='current_forecast'>
+      <!-- ? CURRENT FORECAST -->
+    </section>
+    <section class='weekly_forecast'>
+      <!-- ? WEEKLY FORECAST -->
+    </section>
+  </div>
+</main>
+
+<footer>
+  <div class='footer_content'>
+    <a href='https://openweathermap.org/' target='_blank'>OpenWeather API</a>
+  </div>
+</footer>
+  
+  <script type="module" src="main.js"></script>
+</body>
+</html>
