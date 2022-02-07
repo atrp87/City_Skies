@@ -5,7 +5,6 @@
 }
 
 * {
-  margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
@@ -98,7 +97,8 @@ fahrenheit_btn */
 /* * CTA INFO * */
 
 .cta_content {
-  opacity: 1;
+  visibility: hidden;
+  font-size: 1rem;
   text-align: center;
   letter-spacing: 0.2rem;
   color: var(--orange-color);
@@ -111,7 +111,7 @@ fahrenheit_btn */
   margin: auto;
   flex-wrap: wrap;
   border-radius: 5px;
-  margin-bottom: 4rem;
+  margin-bottom: 2rem;
   justify-content: space-evenly;
 }
 
@@ -119,7 +119,6 @@ fahrenheit_btn */
 
 .current_forecast {
   text-align: left;
-
   padding: 1rem 1rem 1rem 1rem;
 }
 
@@ -174,7 +173,7 @@ li {
   border-top: 1px solid var(--white-color);
   display: flex;
   justify-content: center;
-  padding: 2rem 0 1rem 0;
+  padding: 1.5rem 0 1rem 0;
 }
 
 .footer_content a {
@@ -184,55 +183,9 @@ li {
   font-size: 1.2rem;
 }
 
-/* @media screen and (max-width: 690px) {
-  .current_forecast,
+@media screen and (max-width: 500px) {
   .weekly_forecast {
-    width: 100%;
-    text-align: center;
-  }
-
-  .weather_content {
-    text-align: center;
-    justify-content: center;
-  }
-} */
-
-.loader_container {
-  position: relative;
-}
-
-.loader {
-  position: absolute;
-  margin-left: auto;
-  margin-right: auto;
-  left: 0;
-  right: 0;
-  text-align: center;
-  border: 16px solid var(--white-color);
-  border-radius: 50%;
-  border-top: 16px solid var(--orange-color);
-  width: 120px;
-  height: 120px;
-  -webkit-animation: spin 2s linear infinite; /* Safari */
-  animation: spin 2s linear infinite;
-  opacity: 1;
-}
-
-/* Safari */
-@-webkit-keyframes spin {
-  0% {
-    -webkit-transform: rotate(0deg);
-  }
-  100% {
-    -webkit-transform: rotate(360deg);
-  }
-}
-
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
+    padding: 0;
+    grid-template-columns: repeat(4, 1fr);
   }
 }
