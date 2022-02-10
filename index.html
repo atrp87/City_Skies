@@ -3,7 +3,7 @@
 <head>
   <meta charset='UTF-8'>
   <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0' maximum-scale="1">
   <link rel='preconnect' href='https://fonts.googleapis.com'>
   <link rel='preconnect' href='https://fonts.gstatic.com' crossorigin>
   <link href='https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap' rel='stylesheet'>
@@ -13,6 +13,7 @@
   <title>City Skies</title>
 </head>
 <body>
+  
 <header>
   <div class='title'>
     <h1>
@@ -28,7 +29,10 @@
     <button class='submit_btn'>Submit</button>
   </div>
 </header>
-<div id="loading"></div>
+
+  <!-- ? LOADER -->
+  <div id="loading"></div>
+
 <main>
   <div class="scale_btn_container">
     <input type="button" class='metric_btn scale_btn active_unit' value="Metric">
@@ -40,7 +44,6 @@
     </h2>
   </div>
   <div class='weather_content'>
-    <!-- ? LOADER -->
     <section class='current_forecast'>
       <!-- ? CURRENT FORECAST -->
     </section>

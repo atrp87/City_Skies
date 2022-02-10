@@ -157,17 +157,21 @@ li {
 
 .weekly_forecast {
   padding: 1rem 1rem 1rem 1rem;
-  display: grid;
-  grid-gap: 2%;
-  grid-template-columns: repeat(9, 1fr);
+  display: flex;
+  grid-gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
   align-items: center;
   text-align: center;
+  /* grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr; */
+  /* grid-template-rows: 25% 100px auto; */
 }
 
 .day_content > * {
   padding: 0.5rem;
 }
 
+/* * LOADER * */
 #loading {
   position: absolute;
   top: 0;
@@ -211,12 +215,5 @@ li {
   }
   100% {
     transform: rotate(360deg);
-  }
-}
-
-@media screen and (max-width: 500px) {
-  .weekly_forecast {
-    padding: 0;
-    grid-template-columns: repeat(4, 1fr);
   }
 }
