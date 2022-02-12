@@ -31,4 +31,9 @@
 
 
 ## Screenshots
-![Weather forecast image]()
+![Weather forecast image](Screenshot 2022-02-12 at 18.27.20.png)
+
+## Acknowledgements
+
+## Contact
+Created by [drewpeattie@hotmail.com](mailto:drewpeattie@hotmail.com) - feel free to contact me!
