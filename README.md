@@ -25,7 +25,7 @@
 - Working with hooks such as useRef for capturing input values and useState
 
 ## Screenshots
-![Weather forecast image](Screenshot 2022-02-12 at 18.27.20.png)
+![Weather forecast image](app_screenshot.png)
 
 ## Acknowledgements
 Built using [OpenWeather API](https://openweathermap.org/) and [LocationIQ](https://locationiq.com/)
