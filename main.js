@@ -75,7 +75,7 @@ const renderError = (msg) => {
 };
 
 const fetchWeatherData = async (cityName) => {
-
+  weatherContent.style.opacity = 0;
   try {
     const currentWeather = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&units=${unit}&appid=8dd55712ad3e5e950fb94620922f7ada`);
     if (!currentWeather.ok) throw new Error(`City not found '${cityName}'`);
@@ -93,11 +93,12 @@ const fetchWeatherData = async (cityName) => {
     cta.style.visibility = 'hidden';
     cta.innerHTML = '';
 
+    weatherContent.style.opacity = 1;
+
   } catch (err) {
     renderError(`${err.message}`)
   };
 };
-
 
 //  ? Revisit
 // const metricSelect = () => {
@@ -159,6 +160,7 @@ const renderCurrentWeather = (currentWeather) => {
 const renderDailyWeather = (dailyForecast) => {
   // Clear weekly forecast Nodes
   document.querySelector('.weekly_forecast').innerHTML = '';
+  // weatherContent.style.opacity = 0;
 
   dailyForecast.daily.map((day, i) => {
     if (i > 0) {
@@ -182,12 +184,8 @@ const renderDailyWeather = (dailyForecast) => {
       document.querySelector('.weekly_forecast').appendChild(eachDay);
     };
   });
-  weatherContent.style.opacity = 1;
 };
-// renderDailyWeather(weekForecast)
 
-
-// * Geo loc
 const getUserPosition = function () {
   if (navigator.geolocation) {
     return new Promise((resolve, reject) => {
@@ -212,7 +210,7 @@ function hideLoading() {
 
 window.addEventListener('load', async () => {
 
-  displayLoading()
+  displayLoading();
 
   try {
     // Geo
@@ -223,7 +221,7 @@ window.addEventListener('load', async () => {
     if (!resGeo.ok) throw new Error('Problem accessing your location data');
     const dataGeo = await resGeo.json();
 
-    hideLoading()
+    hideLoading();
 
     fetchWeatherData(dataGeo.address.town);
 
@@ -232,6 +230,3 @@ window.addEventListener('load', async () => {
     throw err;
   };
 }, false);
-
-
-// module.exports = main;
