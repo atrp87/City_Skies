@@ -6,49 +6,54 @@ const cta = document.querySelector('.cta_content');
 const weatherContent = document.querySelector('.weather_content');
 const unitBtn = document.querySelectorAll('.scale_btn');
 const loader = document.querySelector('#loading');
-
 const icons = `https://openweathermap.org/img/w/`; // ${icon}.png
 
-// ! fade in & out
-// Mixed Content: The page at '<URL>' was loaded over HTTPS, but requested an insecure element 
-// '<URL>'. This request was automatically upgraded to HTTPS, For more information see <URL>
+// ? ANIMATIONS
+// ? MOBILE
+
+const getCityName = () => {
+  // get innerHtml from renderCurrentWeather
+  const str = document.querySelector('.cityName').innerHTML;
+  const cityName = str.substring(0, str.indexOf(','));
+  return cityName;
+}
 
 let unit = 'metric';
 
-const unitButtons = () => {
+unitBtn.forEach(btn => {
   const metricBtn = document.querySelector('.metric_btn');
   const imperialBtn = document.querySelector('.imperial_btn');
 
-  unitBtn.forEach(btn => {
-    btn.addEventListener('click', () => {
-      if (btn.value === 'Metric: °C, m/s') {
-        // metric btn
-        metricBtn.classList.add('active_unit');
-        imperialBtn.classList.remove('active_unit')
-        unit = 'metric';
+  btn.addEventListener('click', () => {
+    if (btn.value === 'Metric: °C, m/s') {
+      // City innerHtml
+      const cityName = getCityName()
+      // metric btn
+      metricBtn.classList.add('active_unit');
+      imperialBtn.classList.remove('active_unit')
+      unit = 'metric';
+      fetchWeatherData(cityName)
+      return unit;
 
-      } else if (btn.value === 'Imperial: °F, mph') {
-        // imperial btn
-        imperialBtn.classList.add('active_unit');
-        metricBtn.classList.remove('active_unit')
-        unit = 'imperial';
-      };
-    });
+    } else if (btn.value === 'Imperial: °F, mph') {
+      // City innerHtml
+      const cityName = getCityName()
+      // imperial btn
+      imperialBtn.classList.add('active_unit');
+      metricBtn.classList.remove('active_unit')
+      unit = 'imperial';
+      fetchWeatherData(cityName)
+      return unit;
+    };
   });
-
-  return unit;
-};
-
-unitButtons();
+});
 
 const inputQuery = (e) => {
   if (input.value === '') {
     renderError('City Name Required');
 
   } else if (e.keyCode === 13) {
-    // passing unit val
-    const unit = unitButtons();
-    fetchWeatherData(input.value.toLowerCase(), unit);
+    fetchWeatherData(input.value.toLowerCase());
     input.value = '';
   };
 };
@@ -60,9 +65,7 @@ const buttonQuery = () => {
     renderError('City Name Required');
 
   } else {
-    // passing unit val
-    const unit = unitButtons()
-    fetchWeatherData(input.value.toLowerCase(), unit);
+    fetchWeatherData(input.value.toLowerCase());
     input.value = '';
   };
 };
@@ -75,7 +78,7 @@ const renderError = (msg) => {
 };
 
 const fetchWeatherData = async (cityName) => {
-  weatherContent.style.opacity = 0;
+
   try {
     const currentWeather = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&units=${unit}&appid=8dd55712ad3e5e950fb94620922f7ada`);
     if (!currentWeather.ok) throw new Error(`City not found '${cityName}'`);
@@ -100,27 +103,6 @@ const fetchWeatherData = async (cityName) => {
   };
 };
 
-//  ? Revisit
-// const metricSelect = () => {
-//   metricBtn.classList.add('active_unit');
-//   imperialBtn.classList.remove('active_unit')
-//   unit = 'metric';
-//   return unit
-// };
-
-// const imperialSelect = () => {
-//   imperialBtn.classList.add('active_unit');
-//   metricBtn.classList.remove('active_unit')
-//   unit = 'imperial';
-//   return unit
-// };
-
-// metricBtn.addEventListener('click', metricSelect);
-// imperialBtn.addEventListener('click', imperialSelect);
-
-// metricBtn.addEventListener('click', fetchWeatherData);
-// imperialBtn.addEventListener('click', fetchWeatherData);
-
 const renderCurrentWeather = (currentWeather) => {
 
   const time = new Date(currentWeather.dt * 1000);
@@ -135,7 +117,7 @@ const renderCurrentWeather = (currentWeather) => {
   const weatherHTML =
     `
     <p>${dayTime}</p>
-      <h1>${name},
+      <h1 class='cityName'>${name},
         <sup>${country}</sup>
       </h1>
       <div>
@@ -160,9 +142,9 @@ const renderCurrentWeather = (currentWeather) => {
 const renderDailyWeather = (dailyForecast) => {
   // Clear weekly forecast Nodes
   document.querySelector('.weekly_forecast').innerHTML = '';
-  // weatherContent.style.opacity = 0;
 
-  dailyForecast.daily.map((day, i) => {
+  dailyForecast.daily.forEach((day, i) => {
+
     if (i > 0) {
       const { min, max } = day.temp;
       const { icon, description } = day.weather[0];
@@ -171,7 +153,6 @@ const renderDailyWeather = (dailyForecast) => {
       const weekDays = now.toString().slice(0, 3);
 
       const eachDay = document.createElement('div');
-
       eachDay.className = 'day_content';
       eachDay.innerHTML =
         `
@@ -216,6 +197,7 @@ window.addEventListener('load', async () => {
     // Geo
     const pos = await getUserPosition();
     const { latitude: lat, longitude: lon } = pos.coords;
+
     // Rev geo 
     const resGeo = await fetch(`https://locationiq.com/v1/reverse.php?key=pk.7854eeb280aa85d18b2cf4a1bc13a228&lat=${lat}&lon=${lon}&format=json`);
     if (!resGeo.ok) throw new Error('Problem accessing your location data');
