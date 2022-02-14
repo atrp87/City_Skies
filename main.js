@@ -8,15 +8,13 @@ const unitBtn = document.querySelectorAll('.scale_btn');
 const loader = document.querySelector('#loading');
 const icons = `https://openweathermap.org/img/w/`; // ${icon}.png
 
-// ? ANIMATIONS
-// ? MOBILE
-
 const getCityName = () => {
   // get innerHtml from renderCurrentWeather
   const str = document.querySelector('.cityName').innerHTML;
   const cityName = str.substring(0, str.indexOf(','));
+
   return cityName;
-}
+};
 
 let unit = 'metric';
 
@@ -26,23 +24,31 @@ unitBtn.forEach(btn => {
 
   btn.addEventListener('click', () => {
     if (btn.value === 'Metric: °C, m/s') {
-      // City innerHtml
-      const cityName = getCityName()
+      // Get city name
+      const cityName = getCityName();
+
       // metric btn
       metricBtn.classList.add('active_unit');
-      imperialBtn.classList.remove('active_unit')
+      imperialBtn.classList.remove('active_unit');
+
       unit = 'metric';
-      fetchWeatherData(cityName)
+      // call api
+      fetchWeatherData(cityName);
+
       return unit;
 
     } else if (btn.value === 'Imperial: °F, mph') {
       // City innerHtml
-      const cityName = getCityName()
+      const cityName = getCityName();
+
       // imperial btn
       imperialBtn.classList.add('active_unit');
-      metricBtn.classList.remove('active_unit')
+      metricBtn.classList.remove('active_unit');
+
       unit = 'imperial';
-      fetchWeatherData(cityName)
+      // call api
+      fetchWeatherData(cityName);
+
       return unit;
     };
   });
@@ -70,7 +76,7 @@ const buttonQuery = () => {
   };
 };
 
-submitBtn.addEventListener('click', buttonQuery)
+submitBtn.addEventListener('click', buttonQuery);
 
 const renderError = (msg) => {
   cta.innerHTML = msg;
@@ -78,6 +84,8 @@ const renderError = (msg) => {
 };
 
 const fetchWeatherData = async (cityName) => {
+
+  weatherContent.style.opacity = 0;
 
   try {
     const currentWeather = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&units=${unit}&appid=8dd55712ad3e5e950fb94620922f7ada`);
@@ -106,7 +114,7 @@ const fetchWeatherData = async (cityName) => {
 const renderCurrentWeather = (currentWeather) => {
 
   const time = new Date(currentWeather.dt * 1000);
-  const dayTime = time.toString().slice(0, 10)
+  const dayTime = time.toString().slice(0, 10);
 
   const { name, visibility } = currentWeather;
   const { country } = currentWeather.sys;
@@ -122,10 +130,10 @@ const renderCurrentWeather = (currentWeather) => {
       </h1>
       <div>
         <img src='${icons}${icon}.png' alt='current weather is ${description}'>
-      <h2>${temp.toFixed(0)}&deg</h2>
+      <h2 class='degC'>${temp.toFixed(0)}&deg</h2>
       </div>
       <div>
-        <h3>${description}, feels like: ${feels_like.toFixed(0)}&deg</h3>
+        <h3>${description}, feels like:  ${feels_like.toFixed(0)}&deg</h3>
       </div>
       <div>
         <ul>
