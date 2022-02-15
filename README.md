@@ -1,6 +1,6 @@
 # City Skies
 > A weather forecast web app displaying the current and weekly forecast with reverse geocoding and a city search.
-> Live demo [_here_](https://chillhop-phi.vercel.app/).
+> Live demo [_here_](https://atrp87.github.io/City_Skies/).
 
 ## Table of Contents
 * [General Info](#general-information)
