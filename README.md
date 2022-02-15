@@ -1,5 +1,5 @@
 # City Skies
-> React music player with play / pause, skip forward / back and a drag handler to change the position of the song with a library of songs from chillhop.com.
+> A weather forecast web app displaying the current and weekly forecast with reverse geocoding and a city search.
 > Live demo [_here_](https://chillhop-phi.vercel.app/).
 
 ## Table of Contents
@@ -11,18 +11,18 @@
 * [Contact](#contact)
 
 ## General Information
-- This allowed me to consolidate core concepts and refresh working with hooks ( more time spent on class components ) before looking into state management ( Redux ).
-- This was also my fist real experience with Scss, I have a lot of appreciation for CSS as it seems like this never ending language where there is always something knew to learn.
-- Scss is a great addition as it’s very intuitive with nesting, variables and partials, I will definitely be using it in the future.
+- The project allowed me to try out async / await previously I had only been promise chaining with .then handlers.
+- More time investigating the JavaScript Event Loop, Call Stack, Callback Queue and Microtask Queue
+- Manual error handling 
 
 ## Technologies Used
 - [Javascript](https://www.javascript.com/)
 - CSS
 
 ## Lessons Learned
-- Passing, deconstructing and drilling props
-- Modifying, passing and lifting state
-- Working with hooks such as useRef for capturing input values and useState
+- 404 error doesn’t reject the promise (surprisingly) it's considered a successful request from the promise point of view.
+- Microtask Queue has higher priority than Callback Queue of fetching the callback functions to Event Loop.
+- Although  I didn’t use any promise combinators I was able to take my time and look in to running promises parallel and other promise combinators specifically all and race.
 
 ## Screenshots
 ![Weather forecast image](city_skies_screenshot.png)
