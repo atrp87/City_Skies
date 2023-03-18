@@ -11,6 +11,7 @@ const icons = `https://openweathermap.org/img/w/`; // ${icon}.png
 const getCityName = () => {
   // get innerHtml from renderCurrentWeather
   const str = document.querySelector('.cityName').innerHTML;
+  // extract the city name from the string up to the first comma
   const cityName = str.substring(0, str.indexOf(','));
 
   return cityName;
@@ -22,46 +23,37 @@ unitBtn.forEach(btn => {
   const metricBtn = document.querySelector('.metric_btn');
   const imperialBtn = document.querySelector('.imperial_btn');
 
-  btn.addEventListener('click', () => {
-    if (btn.value === 'Metric: °C, m/s') {
-      // Get city name
-      const cityName = getCityName();
+  const handleClick = () => {
+    // Get city name
+    const cityName = getCityName();
 
-      // metric btn
+    if (btn.value === 'Metric: °C, m/s') {
       metricBtn.classList.add('active_unit');
       imperialBtn.classList.remove('active_unit');
-
       unit = 'metric';
-      // call api
-      fetchWeatherData(cityName);
-
-      return unit;
-
-    } else if (btn.value === 'Imperial: °F, mph') {
-      // City innerHtml
-      const cityName = getCityName();
-
-      // imperial btn
+    }
+    if (btn.value === 'Imperial: °F, mph') {
       imperialBtn.classList.add('active_unit');
       metricBtn.classList.remove('active_unit');
-
       unit = 'imperial';
-      // call api
-      fetchWeatherData(cityName);
-
-      return unit;
     };
-  });
+
+    // call api
+    fetchWeatherData(cityName)
+  };
+
+  btn.addEventListener('click', handleClick);
 });
 
 const inputQuery = (e) => {
   if (input.value === '') {
     renderError('City Name Required');
+  }
 
-  } else if (e.keyCode === 13) {
+  if (e.keyCode === 13) {
     fetchWeatherData(input.value.toLowerCase());
     input.value = '';
-  };
+  }
 };
 
 input.addEventListener('keyup', inputQuery);
@@ -88,11 +80,13 @@ const fetchWeatherData = async (cityName) => {
   weatherContent.style.opacity = 0;
 
   try {
+    displayLoading()
     const currentWeather = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&units=${unit}&appid=8dd55712ad3e5e950fb94620922f7ada`);
     if (!currentWeather.ok) throw new Error(`City not found '${cityName}'`);
     const currentResponse = await currentWeather.json();
 
     renderCurrentWeather(currentResponse);
+
     const { lat, lon } = currentResponse.coord;
 
     const dailyWeather = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=${unit}&exclude=current,minutely,hourly,alerts&appid=8dd55712ad3e5e950fb94620922f7ada`);
@@ -100,6 +94,8 @@ const fetchWeatherData = async (cityName) => {
     const dailyResponse = await dailyWeather.json();
 
     renderDailyWeather(dailyResponse);
+
+    hideLoading()
 
     cta.style.visibility = 'hidden';
     cta.innerHTML = '';
@@ -133,7 +129,7 @@ const renderCurrentWeather = (currentWeather) => {
       <h2 class='degC'>${temp.toFixed(0)}&deg</h2>
       </div>
       <div>
-        <h3>${description}, feels like:  ${feels_like.toFixed(0)}&deg</h3>
+        <h3 class='degC'>${description}, feels like:  ${feels_like.toFixed(0)}&deg</h3>
       </div>
       <div>
         <ul>
@@ -187,10 +183,6 @@ const getUserPosition = function () {
 
 function displayLoading() {
   loader.classList.add('display');
-  // stop loading 
-  setTimeout(() => {
-    loader.classList.remove('display');
-  }, 10000);
 };
 
 function hideLoading() {
@@ -198,25 +190,26 @@ function hideLoading() {
 };
 
 window.addEventListener('load', async () => {
-
-  displayLoading();
-
   try {
+    displayLoading();
     // Geo
     const pos = await getUserPosition();
     const { latitude: lat, longitude: lon } = pos.coords;
 
     // Rev geo 
     const resGeo = await fetch(`https://locationiq.com/v1/reverse.php?key=pk.7854eeb280aa85d18b2cf4a1bc13a228&lat=${lat}&lon=${lon}&format=json`);
-    if (!resGeo.ok) throw new Error('Problem accessing your location data');
+    if (!resGeo.ok) throw new Error('Could not fetch your location weather');
     const dataGeo = await resGeo.json();
 
-    hideLoading();
-
     fetchWeatherData(dataGeo.address.town);
+    hideLoading()
 
   } catch (err) {
-    renderError(`Something went wrong ( ${err} )`);
+    if (err instanceof GeolocationPositionError) {
+      renderError('Could not fetch your location, please allow access to your geolocation data');
+    } else {
+      renderError(`Something went wrong ( ${err.message} )`);
+    }
     throw err;
   };
 }, false);

@@ -121,10 +121,13 @@ textarea {
   opacity: 0;
 }
 
-/* .current_forecast,
-.weekly_forecast {
-  transition: 4s ease-in-out;
-} */
+.degC::after {
+  content: ' C';
+}
+
+.degF::after {
+  content: ' F';
+}
 
 /* * CURRENT FORECAST * */
 
