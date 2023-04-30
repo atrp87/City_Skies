@@ -7,42 +7,47 @@ const weatherContent = document.querySelector('.weather_content');
 const unitBtn = document.querySelectorAll('.scale_btn');
 const loader = document.querySelector('#loading');
 const icons = `https://openweathermap.org/img/w/`; // ${icon}.png
+const metricBtn = document.querySelector('.metric_btn');
+const imperialBtn = document.querySelector('.imperial_btn');
+
+let unit = 'metric';
 
 const getCityName = () => {
   // get innerHtml from renderCurrentWeather
-  const str = document.querySelector('.cityName').innerHTML;
-  // extract the city name from the string up to the first comma
+  const cityNameEl = document.querySelector('.cityName');
+  if (!cityNameEl) {
+    // if element doesn't exist
+    return '';
+  }
+  const str = cityNameEl.innerHTML;
+  // city to the first comma
   const cityName = str.substring(0, str.indexOf(','));
 
   return cityName;
 };
 
-let unit = 'metric';
+const handleUnitSwitch = (e) => {
+  const cityName = getCityName();
+  const value = e.target.value;
+
+  switch (value) {
+    case 'Metric: °C, m/s':
+      metricBtn.classList.toggle('active_unit');
+      imperialBtn.classList.toggle('active_unit', false);
+      unit = 'metric';
+      break;
+    case 'Imperial: °F, mph':
+      imperialBtn.classList.toggle('active_unit');
+      metricBtn.classList.toggle('active_unit', false);
+      unit = 'imperial';
+      break;
+  }
+
+  fetchWeatherData(cityName);
+};
 
 unitBtn.forEach(btn => {
-  const metricBtn = document.querySelector('.metric_btn');
-  const imperialBtn = document.querySelector('.imperial_btn');
-
-  const handleClick = () => {
-    // Get city name
-    const cityName = getCityName();
-
-    if (btn.value === 'Metric: °C, m/s') {
-      metricBtn.classList.add('active_unit');
-      imperialBtn.classList.remove('active_unit');
-      unit = 'metric';
-    }
-    if (btn.value === 'Imperial: °F, mph') {
-      imperialBtn.classList.add('active_unit');
-      metricBtn.classList.remove('active_unit');
-      unit = 'imperial';
-    };
-
-    // call api
-    fetchWeatherData(cityName)
-  };
-
-  btn.addEventListener('click', handleClick);
+  btn.addEventListener('click', handleUnitSwitch);
 });
 
 const inputQuery = (e) => {
@@ -82,7 +87,7 @@ const fetchWeatherData = async (cityName) => {
   try {
     displayLoading()
     const currentWeather = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&units=${unit}&appid=8dd55712ad3e5e950fb94620922f7ada`);
-    if (!currentWeather.ok) throw new Error(`City not found '${cityName}'`);
+    if (!currentWeather.ok) throw new Error(`City not found ${cityName}`);
     const currentResponse = await currentWeather.json();
 
     renderCurrentWeather(currentResponse);
@@ -183,10 +188,12 @@ const getUserPosition = function () {
 
 function displayLoading() {
   loader.classList.add('display');
+  loader.style.display = 'block';
 };
 
 function hideLoading() {
   loader.classList.remove('display');
+  loader.style.display = 'none';
 };
 
 window.addEventListener('load', async () => {

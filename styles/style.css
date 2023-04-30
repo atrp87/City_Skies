@@ -1,23 +1,36 @@
+@import url('media-queries.css');
+
 :root {
   --main-color: #16202c;
   --white-color: #fff;
   --orange-color: #eb6e4b;
 }
 
-* {
+*,
+*::before,
+*::after {
+  margin: 0;
   padding: 0;
+  -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
 
+html,
 body {
   background-color: var(--main-color);
   color: var(--white-color);
   font-family: 'Roboto', sans-serif;
   max-width: 1600px;
   margin: auto;
+  height: 100%;
+  width: 100%;
 }
 
 /* * HEADER * */
+
+header {
+  margin-bottom: 8rem;
+}
 .title {
   margin: 1rem 0 2rem 0.5rem;
 }
@@ -61,16 +74,32 @@ textarea {
   background-color: #c3112d;
 }
 
-::placeholder {
+::-webkit-input-placeholder {
+  color: inherit;
+  opacity: 1;
+}
+
+::-moz-placeholder {
   color: inherit;
   opacity: 1;
 }
 
 :-ms-input-placeholder {
   color: inherit;
+  opacity: 1;
 }
 
 ::-ms-input-placeholder {
+  color: inherit;
+  opacity: 1;
+}
+
+::placeholder {
+  color: inherit;
+  opacity: 1;
+}
+
+:-ms-input-placeholder {
   color: inherit;
 }
 
@@ -102,7 +131,8 @@ textarea {
 /* * CTA INFO * */
 .cta_content {
   visibility: hidden;
-  font-size: 1rem;
+  font-size: 1.3rem;
+  margin-bottom: 3rem;
   text-align: center;
   letter-spacing: 0.2rem;
   color: var(--orange-color);
@@ -111,12 +141,19 @@ textarea {
 /* * ALL WEATHER CONTENT * */
 
 .weather_content {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  margin: auto;
+  margin: 0 auto;
+  -ms-flex-wrap: wrap;
   flex-wrap: wrap;
   border-radius: 5px;
   margin-bottom: 2rem;
+  -webkit-box-pack: space-evenly;
+  -ms-flex-pack: space-evenly;
   justify-content: space-evenly;
+  -webkit-transition: opacity 3s;
+  -o-transition: opacity 3s;
   transition: opacity 3s;
   opacity: 0;
 }
@@ -158,10 +195,17 @@ li {
 /* * WEEKLY FORECAST * */
 
 .weekly_forecast {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
   grid-gap: 10px;
+  -ms-flex-wrap: wrap;
   flex-wrap: wrap;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
   justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
   text-align: center;
 }
@@ -178,26 +222,19 @@ li {
   bottom: 0;
   left: 0;
   right: 0;
-  width: 300px;
-  height: 500px;
   margin: auto;
   width: 4rem;
   height: 4rem;
   border: 10px solid var(--white-color);
   border-top: 11px solid var(--orange-color);
   border-radius: 100%;
-  margin: auto;
-  visibility: hidden;
+
   -webkit-animation: spin 2s linear infinite;
   animation: spin 1s infinite linear;
 }
 
 .load_container {
   position: relative;
-}
-
-#loading.display {
-  visibility: visible;
 }
 
 @-webkit-keyframes spin {
@@ -211,9 +248,11 @@ li {
 
 @keyframes spin {
   0% {
+    -webkit-transform: rotate(0deg);
     transform: rotate(0deg);
   }
   100% {
+    -webkit-transform: rotate(360deg);
     transform: rotate(360deg);
   }
 }

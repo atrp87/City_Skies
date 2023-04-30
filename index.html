@@ -1,59 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset='UTF-8'>
-  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-  <meta name='viewport' content="width=device-width, initial-scale=1, maximum-scale=1">
-  <link rel='preconnect' href='https://fonts.googleapis.com'>
-  <link rel='preconnect' href='https://fonts.gstatic.com' crossorigin>
-  <link href='https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap' rel='stylesheet'>
-  <link rel='manifest' href='favicon_io/site.webmanifest' />
-  <link rel='shortcut icon' type='image/jpg' href='favicon_io/favicon.ico'/>
-  <link rel='stylesheet'type="text/css" href='style.css'>
-  <title>City Skies</title>
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="manifest" href="favicon_io/site.webmanifest" />
+    <link rel="shortcut icon" type="image/jpg" href="favicon_io/favicon.ico" />
+    <link rel="stylesheet" type="text/css" href="./styles/style.css" />
+    <title>City Skies</title>
+  </head>
+  <body>
+    <header>
+      <div class="title">
+        <h1>City Skies<span>.</span></h1>
+      </div>
+      <div class="search_container">
+        <input
+          class="search_input"
+          type="text"
+          placeholder="Search City"
+          aria-label="Search"
+        />
+        <button class="submit_btn" aria-label="Search for products">
+          Submit
+        </button>
+      </div>
+      <div class="scale_btn_container">
+        <input
+          type="button"
+          class="metric_btn scale_btn active_unit"
+          value="Metric: °C, m/s"
+          aria-label="Select Celsius"
+        />
+        <input
+          type="button"
+          class="imperial_btn scale_btn"
+          value="Imperial: °F, mph"
+          aria-label="Select Fahrenheit"
+        />
+      </div>
+    </header>
 
-<header>
-  <div class='title'>
-    <h1>
-      City Skies<span>.</span>
-    </h1>
-  </div>
-  <div class="search_container">
-    <input 
-      class="search_input" 
-      type="text" 
-      placeholder='Search City'
-    >
-    <button class='submit_btn'>Submit</button>
-  </div>
-</header>
+    <!-- ? LOADER -->
+    <div id="loading"></div>
 
-  <!-- ? LOADER -->
-  <div id="loading"></div>
+    <main>
+        <h2 class="cta_content">
+          <!-- ? CTA -->
+        </h2>
+      </div>
+      <div class="weather_content">
+        <section class="current_forecast">
+          <!-- ? CURRENT FORECAST -->
+        </section>
+        <section class="weekly_forecast">
+          <!-- ? WEEKLY FORECAST -->
+        </section>
+    </main>
 
-<main>
-  <div class="scale_btn_container">
-    <input type="button" class='metric_btn scale_btn active_unit' value="Metric: °C, m/s">
-    <input type="button" class='imperial_btn scale_btn' value="Imperial: °F, mph">
-  </div>
-  <div>
-    <h2 class='cta_content'>
-      <!-- ? CTA -->
-    </h2>
-  </div>
-  <div class='weather_content'>
-    <section class='current_forecast'>
-      <!-- ? CURRENT FORECAST -->
-    </section>
-    <section class='weekly_forecast'>
-      <!-- ? WEEKLY FORECAST -->
-    </section>
-  </div>
-</main>
-
-<script type="module" src="main.js"></script>
-
-</body>
+    <script type="module" src="main.js"></script>
+  </body>
 </html>

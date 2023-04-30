@@ -1,0 +1,12 @@
+@media screen and (max-width: 768px) {
+  /* styles for screens with maximum width of 768px */
+  body {
+    font-size: 20px;
+  }
+}
+@media screen and (min-width: 1025px) {
+  /* styles for screens with minimum width of 1025px */
+  body {
+    font-size: 25px;
+  }
+}
