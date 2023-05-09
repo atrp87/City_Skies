@@ -15,12 +15,9 @@ let unit = 'metric';
 const getCityName = () => {
   // get innerHtml from renderCurrentWeather
   const cityNameEl = document.querySelector('.cityName');
-  if (!cityNameEl) {
-    // if element doesn't exist
-    return '';
-  }
+
+  if (!cityNameEl) return '';
   const str = cityNameEl.innerHTML;
-  // city to the first comma
   const cityName = str.substring(0, str.indexOf(','));
 
   return cityName;
@@ -86,8 +83,9 @@ const fetchWeatherData = async (cityName) => {
 
   try {
     displayLoading()
+
     const currentWeather = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&units=${unit}&appid=8dd55712ad3e5e950fb94620922f7ada`);
-    if (!currentWeather.ok) throw new Error(`City not found ${cityName}`);
+    if (!currentWeather.ok) throw new Error(`City not found '${cityName}'`);
     const currentResponse = await currentWeather.json();
 
     renderCurrentWeather(currentResponse);
@@ -100,8 +98,6 @@ const fetchWeatherData = async (cityName) => {
 
     renderDailyWeather(dailyResponse);
 
-    hideLoading()
-
     cta.style.visibility = 'hidden';
     cta.innerHTML = '';
 
@@ -109,6 +105,9 @@ const fetchWeatherData = async (cityName) => {
 
   } catch (err) {
     renderError(`${err.message}`)
+
+  } finally {
+    hideLoading();
   };
 };
 
@@ -209,14 +208,16 @@ window.addEventListener('load', async () => {
     const dataGeo = await resGeo.json();
 
     fetchWeatherData(dataGeo.address.town);
-    hideLoading()
 
   } catch (err) {
     if (err instanceof GeolocationPositionError) {
+
       renderError('Could not fetch your location, please allow access to your geolocation data');
     } else {
       renderError(`Something went wrong ( ${err.message} )`);
     }
-    throw err;
-  };
-}, false);
+
+  } finally {
+    hideLoading();
+  }
+});
